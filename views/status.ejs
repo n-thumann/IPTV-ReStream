@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('header') %>
+    <body>
+        <%- include('nav') %>
+        <br>
+        <div class="content">
+            <table class="table text-center">
+                <thead class="thead-accent">
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Station (Program)</th>
+                        <th scope="col">Local Address</th>
+                        <th scope="col">Remote Address</th>
+                        <th scope="col">RX / TX</th>
+                        <th scope="col">Throughput</th>
+                        <th scope="col">Since</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (connections.length == 0) { %>
+                        
+                        <tr>
+                            <td colspan="7">No connections</td>
+                        </tr>
+                    <% } else { %>
+                        <% connections.forEach((connection) => { %>
+                            <tr>
+                                <td>
+                                    <% if (connection.station) { %>
+                                        <img class="stationImg" src="<%= connection.station.image %>">
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (connection.station) { %>
+                                        <%= connection.station.title %> (<%= connection.program %>)
+                                    <% } else { %>
+                                        Unknown Station (<%= connection.program %>)
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <%= connection.localAddress %>:<%= connection.localPort %>
+                                </td>
+                                <td>
+                                    <%= connection.remoteAddress %>:<%= connection.remotePort %>
+                                    <% if (connection.realIP && connection.realPort) { %>
+                                        (<%= connection.realIP %>:<%= connection.realPort %>)
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <%= (connection.bytesRead / 1e6).toFixed(4) %> MB / <% (connection.bytesWritten / 1e6).toFixed(4) %> MB
+                                </td>
+                                <td>
+                                    <%= connection.mBits %> MBit/s
+                                </td>
+                                <td>
+                                    <%= (new Date(connection.since).toLocaleString()) %>
+                                </td>
+                            </tr>
+                        <% }); %>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

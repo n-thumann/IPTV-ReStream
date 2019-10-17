@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('header') %>
+    <body>
+        <%- include('nav') %>
+        <br>
+        <div class="content">
+            <div class="subMenu">
+                <i data-feather="download"></i>
+                <a class="menulink" href="stations/download">Download VLC Playlist</a>
+            </div>
+            <br>
+            <table class="table text-center">
+                <thead class="thead-accent">
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Station</th>
+                        <th scope="col">RTP URL</th>
+                        <th scope="col">View Now (open URL in VLC)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (stations.length == 0) { %>
+                        <tr>
+                            <td colspan="7">No Stations</td>
+                        </tr>
+                        <% } else { %>
+                            <% stations.forEach((station) => { %>
+                                <tr>
+                                    <td>
+                                        <img class="stationImg" src="<%= station.image %>" alt="<%= station.title %> Logo">
+                                    </td>
+                                    <td><%= station.title %></td>
+                                    <td><%= `rtp://${station.mcast_source}@${station.mcast_group}:${station.mcast_port}` %></td>
+                                    <td>
+                                        <a href="<%= `${protocol}://${host}${pathPrefix}/live/${station.mcast_source}@${station.mcast_group}:${station.mcast_port}` %>"><i class="playButton" data-feather="play"></i></a>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        <% } %>
+                </tbody>
+            </table>
+        </div>
+        <script>feather.replace()</script>
+    </body>
+</html>

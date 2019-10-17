@@ -1,0 +1,59 @@
+:root {
+    --accentColor: #8fa83e;
+}
+
+h1 {
+    font-family: 'Dosis', sans-serif;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--accentColor);
+    text-shadow: 1px 0px 0px;
+}
+
+body {
+    margin: 30px !important;
+}
+
+.subMenu{
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--accentColor);
+    cursor: pointer;
+}
+
+.customButtons {
+    background-color: var(--accentColor) !important;
+    border-color: var(--accentColor) !important;
+}
+
+.thead-accent th {
+    color: #fff;
+    background-color: var(--accentColor);
+    border-color: #454d55;
+}
+
+tbody {
+    border: 1px solid #dee2e6;
+}
+
+.stationImg {
+    filter: brightness(10%) invert(62.6%) sepia(17.4%) saturate(1206%) hue-rotate(33deg) contrast(97.6%);
+    height: 30px;
+}
+
+a.menulink, a.menulink:hover, a.menulink:visited {
+    text-transform: uppercase;
+    color: var(--accentColor) !important;
+    padding: 14px 16px;
+    transition: 0.3s;
+    letter-spacing: 1px;
+    margin-right: 5px;
+}
+
+.menu {
+    width: min-content;
+}
+
+.playButton {
+    color: var(--accentColor);
+}
