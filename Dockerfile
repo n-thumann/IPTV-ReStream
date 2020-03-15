@@ -5,7 +5,8 @@ COPY src ./src/
 COPY package*.json ./
 COPY tsconfig.json ./
 RUN npm install --only=dev
-RUN /app/node_modules/typescript/bin/tsc
+RUN npm install -g typescript
+RUN tsc
 
 FROM node:13-alpine
 WORKDIR /app
