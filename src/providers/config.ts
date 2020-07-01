@@ -3,6 +3,7 @@ const debug = require('debug')('iptv-restream:config')
 class ConfigProvider {
     readonly host: string = '';
     readonly port: number;
+    readonly mcast_if: string = '';
     readonly xspf_protocol: string = '';
     readonly xspf_host: string = '';
     readonly xspf_pathPrefix: string =  '';
@@ -11,6 +12,7 @@ class ConfigProvider {
     constructor() {
         this.host = process.env.HOST || '127.0.0.1';
         this.port = parseInt(process.env.PORT || '3000');
+        this.mcast_if = process.env.MCAST_IF || '0.0.0.0';
         this.xspf_protocol = process.env.XSPF_PROTOCOL || '';
         this.xspf_host = process.env.XSPF_HOST || '';
         this.xspf_pathPrefix = process.env.XSPF_PATH_PREFIX || '';

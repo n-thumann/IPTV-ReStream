@@ -11,6 +11,7 @@ router.get('/:mcast_source@:mcast_group\::mcast_port', (req: Request, res: Respo
 	const mcast_source = req.params['mcast_source'];
 	const mcast_group = req.params['mcast_group'];
 	const mcast_port = parseInt(req.params['mcast_port']);
+	const mcast_if = configProvider.mcast_if;
 
 	let station = stationProvider.getStationByMcastGroup(mcast_group);
 	if (!station) {
@@ -27,7 +28,7 @@ router.get('/:mcast_source@:mcast_group\::mcast_port', (req: Request, res: Respo
 	connectionProvider.setRealPort(req.socket, req.get('X-Real-Port'));
 
 	const streamer = new streamProvider();
-	streamer.stream(mcast_source, mcast_group, mcast_port, req.socket, res).catch(err => {
+	streamer.stream(mcast_source, mcast_group, mcast_port, mcast_if, req.socket, res).catch(err => {
 		res.status(500).send(`receiver): ${err}`);
 	}).then(() => {
 		connectionProvider.removeConnection(req.socket);

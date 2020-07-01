@@ -6,7 +6,7 @@ const debug = require('debug')('iptv-restream:receiver')
 
 class StreamProvider {
 
-    public stream(mcast_source: string, mcast_group: string, mcast_port: number, socket: Socket, res: Response) {
+    public stream(mcast_source: string, mcast_group: string, mcast_port: number, mcast_if: string, socket: Socket, res: Response) {
         return new Promise(async (resolve, reject) => {
             debug(`Client requested ${mcast_source}@${mcast_group}:${mcast_port}.`);
             const receiver = dgram.createSocket({ type: 'udp4', reuseAddr: true });
@@ -18,8 +18,8 @@ class StreamProvider {
 
             receiver.bind(mcast_port, mcast_group);
             receiver.on('listening', function () {
-                debug(`adding SSM for ${mcast_source}@${mcast_group}:${mcast_port}`);
-                receiver.addSourceSpecificMembership(mcast_source, mcast_group);
+                debug(`adding SSM for ${mcast_source}@${mcast_group}:${mcast_port} using ${mcast_if}`);
+                receiver.addSourceSpecificMembership(mcast_source, mcast_group, mcast_if);
             });
 
             receiver.on('message', function (message: Buffer) {

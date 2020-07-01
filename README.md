@@ -31,6 +31,7 @@ It´s highly recommended to run this application behind a Reverse Proxy ([nginx]
 | -------- | ----------- |
 | HOST | Webinterface Listen Host (default `127.0.0.1`) |
 | PORT | Webinterface Listen Port (default `3000`) |
+| MCAST_IF | joins the multicast group using this interface (default `0.0.0.0`, lets OS choose automatically) |
 | XSPF_PROTOCOL | Protocol (`http`/`https`) for generating XSPF |
 | XSPF_HOST | Host and Port for generating XSPF |
 | XSPF_PATH_PREFIX | Path Prefix for generating XSPF |
