@@ -16,7 +16,11 @@ class StreamProvider {
                 reject(`Error (receiver): ${err}`);
             });
 
-            receiver.bind(mcast_port, mcast_group);
+            if(process.platform === 'win32') {
+                receiver.bind(mcast_port);    
+            } else {
+                receiver.bind(mcast_port, mcast_group);
+            }
             receiver.on('listening', function () {
                 debug(`adding SSM for ${mcast_source}@${mcast_group}:${mcast_port} using ${mcast_if}`);
                 receiver.addSourceSpecificMembership(mcast_source, mcast_group, mcast_if);

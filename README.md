@@ -19,7 +19,7 @@ This app allows remotely viewing source-specific multicast RTP streams (e.g. Deu
 5. Export environment variables (see below), if necessary
 6. Run `npm start`
 
-Or with Docker:
+Or with Docker (Linux only):
 1. [Install](https://docs.docker.com/v17.12/install/) Docker
 2. run `docker run -d --network host --restart always --name IPTV-ReStream [-e HOST="127.0.0.1" -e PORT=1337 -e XSPF_PROTOCOL="https" | -e XSPF_HOST="my.server.com:8080" | -e XSPF_PATH_PREFIX="/iptv" | -e ALLOW_UNKNOWN="false" | -e DEBUG="iptv-restream:*"] nthumann/iptv-restream:latest` (parameters in brackets are optional)
 
@@ -42,6 +42,7 @@ It´s highly recommended to run this application behind a Reverse Proxy ([nginx]
 Open the webinterface and navigate to `Stations`, then download the XSPF Playlist for VLC and open it. Done!
 
 It is also possible to access the source-specific multicast streams directly by opening `/live/mcast_source@mcast_group:mcast_port` (e.g. `/live/87.141.215.251@232.0.20.35:10000` for Das Erste HD) or by using the shortcut at `/live/station/station_title` (e.g. `/live/station/ZDFSD` for ZDF SD).
+Please note that running on Windows only supports streaming one program. For streaming multiple programs concurrently use Linux.
 
 ## Under the hood ##
 For example MagentaTV delivers the H.264 video stream via MPEG-TS, wrapped into RTP packets over source specific multicast. Therefore it is not possible to access this stream when connected to a non-MagentaTV line. This app is proxying the video stream: It receives it, just as usual, at your Telekom line at home and re-streams it over HTTP to your other devices. This concept is inspired by [udpxy](https://github.com/OmegaVVeapon/udpxy).
