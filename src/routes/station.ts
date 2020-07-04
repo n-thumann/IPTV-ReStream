@@ -1,9 +1,9 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response } from 'express';
 import stationProvider from '../providers/station';
 import xspfProvider from '../providers/xspf';
 import config from '../providers/config';
 
-var router = Router();
+const router = Router();
 
 router.get('/', async (req: Request, res: Response) => {
     res.render('stations', {

@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response } from 'express';
 import connectionProvider from '../providers/connection';
 const router = Router();
 

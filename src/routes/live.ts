@@ -1,21 +1,22 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response } from 'express';
 import connectionProvider from '../providers/connection';
 import stationProvider from '../providers/station';
 import streamProvider from '../providers/stream';
 import configProvider from '../providers/config';
-const debug = require('debug')('iptv-restream:live')
+import debug from 'debug';
 
 const router = Router();
+const logger = debug('iptv-restream:live');
 
-router.get('/:mcast_source@:mcast_group\::mcast_port', (req: Request, res: Response) => {
+router.get('/:mcast_source@:mcast_group::mcast_port', async (req: Request, res: Response) => {
 	const mcast_source = req.params['mcast_source'];
 	const mcast_group = req.params['mcast_group'];
 	const mcast_port = parseInt(req.params['mcast_port']);
 	const mcast_if = configProvider.mcast_if;
 
-	let station = stationProvider.getStationByMcastGroup(mcast_group);
+	const station = stationProvider.getStationByMcastGroup(mcast_group);
 	if (!station) {
-		debug(`Mcast_group "${mcast_group}" not found.`);
+		logger(`Mcast_group "${mcast_group}" not found.`);
 		if(!configProvider.allow_unknown) {
 			res.status(404).send(`Mcast_group "${mcast_group}" not found.`);
 			return;
@@ -28,11 +29,12 @@ router.get('/:mcast_source@:mcast_group\::mcast_port', (req: Request, res: Respo
 	connectionProvider.setRealPort(req.socket, req.get('X-Real-Port'));
 
 	const streamer = new streamProvider();
-	streamer.stream(mcast_source, mcast_group, mcast_port, mcast_if, req.socket, res).catch(err => {
+	try {
+		await streamer.stream(mcast_source, mcast_group, mcast_port, mcast_if, req.socket, res);
+	} catch (err) {
 		res.status(500).send(`receiver): ${err}`);
-	}).then(() => {
-		connectionProvider.removeConnection(req.socket);
-	});
+	}
+	connectionProvider.removeConnection(req.socket);
 });
 
 router.get('/station/:station', (req: Request, res: Response) => {

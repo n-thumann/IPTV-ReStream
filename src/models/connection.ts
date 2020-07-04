@@ -1,11 +1,11 @@
 import { Socket } from 'net';
-import Station from './station';
+import { Station } from './station';
 
-class Connection {
+export class Connection {
     readonly socket: Socket;
     readonly since: number = 0;
     public station?: Station;
-    public program: string = "Unknown";
+    public program = 'Unknown';
     public realIP?: string;
     public realPort?: number;
 
@@ -14,5 +14,17 @@ class Connection {
         this.since = new Date().getTime();
     }
 }
-
-export default Connection;
+export interface UIConnection {
+    localAddress: string,
+    localPort: number,
+    remoteAddress: string,
+    remotePort: number,
+    realIP?: string,
+    realPort?: number,
+    bytesRead: number,
+    bytesWritten: number,
+    mBits: string,
+    since: number,
+    station?: Station,
+    program: string
+}

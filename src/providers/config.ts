@@ -1,5 +1,4 @@
-const debug = require('debug')('iptv-restream:config')
-
+import debug from 'debug';
 class ConfigProvider {
     readonly host: string = '';
     readonly port: number;
@@ -17,7 +16,8 @@ class ConfigProvider {
         this.xspf_host = process.env.XSPF_HOST || '';
         this.xspf_pathPrefix = process.env.XSPF_PATH_PREFIX || '';
         this.allow_unknown = (process.env.ALLOW_UNKNOWN === 'true' || process.env.ALLOW_UNKNOWN === '1') ? true : false;
-        debug(`Config loaded: HOST=${this.host}, PORT=${this.port}, XSPF_PROTOCOL=${this.xspf_protocol}, XSPF_HOST=${this.xspf_host}, XSPF_PATH_PREFIX=${this.xspf_pathPrefix}, ALLOW_UNKNOWN=${this.allow_unknown}`);
+        const logger = debug('iptv-restream:config');
+        logger(`Config loaded: HOST=${this.host}, PORT=${this.port}, XSPF_PROTOCOL=${this.xspf_protocol}, XSPF_HOST=${this.xspf_host}, XSPF_PATH_PREFIX=${this.xspf_pathPrefix}, ALLOW_UNKNOWN=${this.allow_unknown}`);
     }
 }
 export default new ConfigProvider();

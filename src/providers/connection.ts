@@ -1,34 +1,36 @@
-import Station from '../models/station';
-import Connection from '../models/connection';
+import { Station } from '../models/station';
+import { Connection, UIConnection } from '../models/connection';
 import { Socket } from 'net';
-const debug = require('debug')('iptv-restream:live')
+import debug from 'debug';
+
 class ConnectionProvider {
     private connections: Connection[] = []
+    private readonly logger = debug('iptv-restream:live');
 
     public addConnection(socket: Socket) {
-        this.connections.push(new Connection(socket));
+        this.connections.push(new Connection(socket))
     }
 
     public removeConnection(socket: Socket) {
         const index = this.connections.findIndex((connection) => {
             return connection.socket === socket;
-        })
+        });
         if (index != -1) {
             this.connections.splice(index, 1);
         } else {
-            debug(`Could remove connection (wrong index)`);
+            this.logger(`Could remove connection (wrong index)`);
         }
     }
 
     public getConnections() {
-            const connections: any = [];
+            const connections: UIConnection[] = [];
             this.connections.forEach((connection) => {
                 const currentSocket = connection.socket;
                 connections.push({
                     'localAddress': currentSocket.localAddress,
                     'localPort': currentSocket.localPort,
-                    'remoteAddress': currentSocket.remoteAddress,
-                    'remotePort': currentSocket.remotePort,
+                    'remoteAddress': currentSocket.remoteAddress ?? '',
+                    'remotePort': currentSocket.remotePort ?? 0,
                     'realIP': connection.realIP,
                     'realPort': connection.realPort,
                     'bytesRead': currentSocket.bytesRead,

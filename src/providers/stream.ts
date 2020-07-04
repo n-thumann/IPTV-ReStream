@@ -2,17 +2,18 @@ import { Socket } from 'net';
 import { Response } from 'express';
 import connectionProvider from './connection';
 import dgram from 'dgram';
-const debug = require('debug')('iptv-restream:receiver')
+import debug from 'debug';
 
 class StreamProvider {
+    private readonly logger = debug('iptv-restream:receiver');
 
-    public stream(mcast_source: string, mcast_group: string, mcast_port: number, mcast_if: string, socket: Socket, res: Response) {
-        return new Promise(async (resolve, reject) => {
-            debug(`Client requested ${mcast_source}@${mcast_group}:${mcast_port}.`);
+    public async stream(mcast_source: string, mcast_group: string, mcast_port: number, mcast_if: string, socket: Socket, res: Response): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.logger(`Client requested ${mcast_source}@${mcast_group}:${mcast_port}.`);
             const receiver = dgram.createSocket({ type: 'udp4', reuseAddr: true });
 
             receiver.on('error', (err: Error) => {
-                debug(`Error (receiver): ${err}`);
+                this.logger(`Error (receiver): ${err}`);
                 reject(`Error (receiver): ${err}`);
             });
 
@@ -21,12 +22,12 @@ class StreamProvider {
             } else {
                 receiver.bind(mcast_port, mcast_group);
             }
-            receiver.on('listening', function () {
-                debug(`adding SSM for ${mcast_source}@${mcast_group}:${mcast_port} using ${mcast_if}`);
+            receiver.on('listening', () => {
+                this.logger(`adding SSM for ${mcast_source}@${mcast_group}:${mcast_port} using ${mcast_if}`);
                 receiver.addSourceSpecificMembership(mcast_source, mcast_group, mcast_if);
             });
 
-            receiver.on('message', function (message: Buffer) {
+            receiver.on('message', (message: Buffer) => {
                 // https://en.wikipedia.org/wiki/Real-time_Transport_Protocol
                 // https://en.wikipedia.org/wiki/MPEG_transport_stream
                 // https://www.etsi.org/deliver/etsi_en/300400_300499/300468/01.14.01_60/en_300468v011401p.pdf - 5.2.4 Event Information Table, 6.2.37 Short event descriptor
@@ -60,10 +61,10 @@ class StreamProvider {
                             event_name_string += String.fromCharCode(event_name[i]);
                         }
                         try {
-                            debug(`Received program for ${mcast_source}@${mcast_group}:${mcast_port}: "${event_name_string}"`)
+                            this.logger(`Received program for ${mcast_source}@${mcast_group}:${mcast_port}: "${event_name_string}"`)
                             connectionProvider.setProgram(socket, event_name_string);
                         } catch (error) {
-                            debug(`Could not set program "${event_name_string}" for socket. Probably already disconnected?`);
+                            this.logger(`Could not set program "${event_name_string}" for socket. Probably already disconnected?`);
                         }
                     }
                 }
@@ -71,7 +72,7 @@ class StreamProvider {
 
             socket.on('close', () => {
                 receiver.close();
-                debug(`Client ${socket.remoteAddress}:${socket.remotePort} disconnected. Closing receiver.`);
+                this.logger(`Client ${socket.remoteAddress}:${socket.remotePort} disconnected. Closing receiver.`);
                 resolve();
             });
         });

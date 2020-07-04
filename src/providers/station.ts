@@ -1,43 +1,50 @@
-import Station from "../models/station";
-import { readFile } from "fs";
-import util from "util";
-const debug = require('debug')('iptv-restream:station')
+import { Station } from '../models/station';
+import { readFile } from 'fs';
+import util from 'util';
+import debug from 'debug';
 
+interface jsonFormat {
+    channel_name: string,
+    media_definition: string,
+    media_multicast_sourceip: string,
+    media_multicast_ip: string,
+    media_multicast_port: string,
+    channel_logo: string
+}
 class StationProvider {
-    readonly stations: Station[] = [];
+    public readonly stations: Station[] = [];
+    private readonly logger = debug('iptv-restream:station');
 
     constructor() {
         readFile('./data/multicastadressliste.json', (err, data: Buffer) => {
             if (err) {
-                debug(err);
+                this.logger(err);
                 return;
             }
             const json = JSON.parse(data.toString());
             const imageProxyFormat = json['imagescalingurl'];
-            json['channellist'].forEach((channel: any) => {
-                this.stations.push(new Station(`${channel['channel_name']} ${channel['media_definition']}`,
-                    channel['media_multicast_sourceip'],
-                    channel['media_multicast_ip'],
-                    channel['media_multicast_port'],
-                    util.format(imageProxyFormat, 30, channel['channel_logo']))
+            json['channellist'].forEach((channel: jsonFormat) => {
+                this.stations.push(new Station(
+                    `${channel.channel_name} ${channel.media_definition}`,
+                    channel.media_multicast_sourceip,
+                    channel.media_multicast_ip,
+                    channel.media_multicast_port,
+                    util.format(imageProxyFormat, 30, channel.channel_logo))
                 );
             });
-            debug("Stations loaded");
+            this.logger('Stations loaded');
         })
     }
 
     public getStationByMcastGroup(mcast_group: string) {
-        return this.stations.find((station: Station) => {
-            return station.mcast_group === mcast_group;
-        });
+        return this.stations.find((station: Station) => station.mcast_group === mcast_group);
     }
 
     public getStationByTitle(title: string) {
         return this.stations.find((station: Station) => {
-            console.log(station.title.toLowerCase().replace(/ /g, ''), title.toLowerCase().replace(/ /g, ''));
             return station.title.toLowerCase().replace(/ /g, '').includes(title.toLowerCase().replace(/ /g, ''));
         });
     }
-};
+}
 
 export default new StationProvider();
