@@ -22,12 +22,13 @@ jobs:
       run: npm ci
     - name: Build (Transpile)
       run: npm run build
-      
+
   lint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [13.x, 14.x]
+    needs: build
     steps:
     - uses: actions/checkout@v2
     - name: Lint using Node.js ${{ matrix.node-version }}
