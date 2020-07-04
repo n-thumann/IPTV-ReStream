@@ -8,7 +8,7 @@
     "watch": "DEBUG=iptv-restream:* nodemon dist/app.js",
     "watch:build": "tsc --watch",
     "clean": "rm -rf dist/* && rm -rf node_modules",
-    "lint": "./node_modules/.bin/eslint . --ext .ts"
+    "lint": "eslint . --ext .ts"
   },
   "dependencies": {
     "debug": "^4.1.1",

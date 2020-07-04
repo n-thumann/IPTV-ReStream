@@ -12,6 +12,7 @@ jobs:
     strategy:
       matrix:
         node-version: [13.x, 14.x]
+    name: Build & Lint
     steps:
     - uses: actions/checkout@v2
     - name: Using Node.js ${{ matrix.node-version }}
@@ -22,18 +23,5 @@ jobs:
       run: npm ci
     - name: Build (Transpile)
       run: npm run build
-
-  lint:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [13.x, 14.x]
-    needs: build
-    steps:
-    - uses: actions/checkout@v2
-    - name: Using Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
     - name: Lint
       run: npm run lint
