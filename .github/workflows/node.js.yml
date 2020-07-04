@@ -14,7 +14,7 @@ jobs:
         node-version: [13.x, 14.x]
     steps:
     - uses: actions/checkout@v2
-    - name: Build using Node.js ${{ matrix.node-version }}
+    - name: Using Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
@@ -31,7 +31,7 @@ jobs:
     needs: build
     steps:
     - uses: actions/checkout@v2
-    - name: Lint using Node.js ${{ matrix.node-version }}
+    - name: Using Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
