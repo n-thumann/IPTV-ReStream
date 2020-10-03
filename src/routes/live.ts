@@ -4,6 +4,7 @@ import stationProvider from '../providers/station';
 import streamProvider from '../providers/stream';
 import configProvider from '../providers/config';
 import debug from 'debug';
+import { escape } from 'html-escaper';
 
 const router = Router();
 const logger = debug('iptv-restream:live');
@@ -18,7 +19,7 @@ router.get('/:mcast_source@:mcast_group::mcast_port', async (req: Request, res: 
 	if (!station) {
 		logger(`Mcast_group "${mcast_group}" not found.`);
 		if(!configProvider.allow_unknown) {
-			res.status(404).send(`Mcast_group "${mcast_group}" not found.`);
+			res.status(404).send(`Mcast_group "${escape(mcast_group)}" not found.`);
 			return;
 		}
 	}
@@ -32,7 +33,7 @@ router.get('/:mcast_source@:mcast_group::mcast_port', async (req: Request, res: 
 	try {
 		await streamer.stream(mcast_source, mcast_group, mcast_port, mcast_if, req.socket, res);
 	} catch (err) {
-		res.status(500).send(`receiver): ${err}`);
+		res.status(500).send(`receiver: ${escape(err)}`);
 	}
 	connectionProvider.removeConnection(req.socket);
 });
@@ -40,7 +41,7 @@ router.get('/:mcast_source@:mcast_group::mcast_port', async (req: Request, res: 
 router.get('/station/:station', (req: Request, res: Response) => {
 	const station = stationProvider.getStationByTitle(req.params['station']);
 	if (!station) {
-		res.status(404).send(`Station "${req.params['station']}" not found.`);
+		res.status(404).send(`Station "${escape(req.params['station'])}" not found.`);
 		return;
 	}
 	res.redirect(`../${station.mcast_source}@${station.mcast_group}:${station.mcast_port}`)
