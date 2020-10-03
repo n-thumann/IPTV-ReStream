@@ -15,7 +15,8 @@
     "express": "^4.17.1",
     "morgan": "^1.10.0",
     "semver": "^7.3.2",
-    "xml2js": "^0.4.22"
+    "xml2js": "^0.4.22",
+    "html-escaper": "^3.0.0"
   },
   "devDependencies": {
     "@types/debug": "^4.1.5",
@@ -25,6 +26,7 @@
     "@types/node": "^14.11.2",
     "@types/semver": "^7.3.4",
     "@types/xml2js": "^0.4.5",
+    "@types/html-escaper": "^3.0.0",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@typescript-eslint/parser": "^4.3.0",
     "eslint": "^7.10.0",
