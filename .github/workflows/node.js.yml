@@ -1,4 +1,4 @@
-name: Node.js CI
+name: "Node.js CI"
 
 on:
   push:
@@ -14,7 +14,8 @@ jobs:
         node-version: [13.x, 14.x]
     name: Build & Lint
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout Code
+      uses: actions/checkout@v2
     - name: Using Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
