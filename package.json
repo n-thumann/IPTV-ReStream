@@ -27,7 +27,7 @@
     "@types/semver": "^7.3.4",
     "@types/xml2js": "^0.4.5",
     "@types/html-escaper": "^3.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.3.0",
+    "@typescript-eslint/eslint-plugin": "^4.7.0",
     "@typescript-eslint/parser": "^4.3.0",
     "eslint": "^7.10.0",
     "typescript": "^4.0.3"
