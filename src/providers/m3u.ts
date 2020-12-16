@@ -1,7 +1,7 @@
 import stationProvider from './station';
 
 class M3UProvider {
-    public generateM3U(hostname: string, simple: boolean) {
+    public generateM3U(hostname: string) {
 
         let m3uString = '#EXTM3U' + '\n';
         let chNum = 1;
