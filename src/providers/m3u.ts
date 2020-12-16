@@ -9,9 +9,7 @@ class M3UProvider {
         const stations = stationProvider.stations;
         for (const station of stations) {
             m3uString += '#EXTINF:-1';
-            if (!simple) {
-                m3uString += ` tvg-chno="${chNum}" tvg-name="${station.title}" tvg-logo="${station.image}" group-title="IPTV"`;
-            }
+            m3uString += ` tvg-chno="${chNum}" tvg-name="${station.title}" tvg-logo="${station.image}" group-title="IPTV"`;
             m3uString += ',' + station.title + '\n';
             m3uString += `${hostname}/live/${station.mcast_source}@${station.mcast_group}:${station.mcast_port}` + '\n';
             chNum++
