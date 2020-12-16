@@ -31,8 +31,7 @@ router.get('/downloadm3u', (req: Request, res: Response) => {
     const protocol = config['xspf_protocol'] || req.protocol;
     const host = config.xspf_host || req.get('X-Forwarded-Host') || req.get('Host');
     const pathPrefix = config.xspf_pathPrefix;
-    res.write(m3uProvider.generateM3U(`${protocol}://${host}${pathPrefix}`, req.query.simple &&
-        "TRUE" === req.query.simple.toString().toUpperCase() ? true : false));
+    res.write(m3uProvider.generateM3U(`${protocol}://${host}${pathPrefix}`));
     res.end();
 });
 
