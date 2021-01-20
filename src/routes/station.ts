@@ -9,7 +9,7 @@ const router = Router();
 router.get('/', async (req: Request, res: Response) => {
     res.render('stations', {
         stations: stationProvider.stations,
-        protocol: config.xspf_protocol,
+        protocol: config['xspf_protocol'] || req.protocol,
         host: config.xspf_host || req.get('X-Forwarded-Host') || req.get('Host'),
         pathPrefix: config.xspf_pathPrefix
     });
