@@ -9,6 +9,7 @@ import statusRouter from './routes/status';
 import liveRouter from './routes/live';
 import stationRouter from './routes/station';
 import configProvider from './providers/config';
+import { SignalConstants } from 'node:os';
 
 if (semver.lt(process.versions.node, '13.1.0')) {
     console.error('NodeJS v13.0.2 (or higher) is required!');
@@ -39,5 +40,12 @@ server.on('error', (err: Error) => {
 server.on('listening', () => {
     logger(`Listening on port ${host}:${port}...`);
 });
+
+process.on('SIGINT', exit);
+process.on('SIGTERM', exit);
+function exit(signal: SignalConstants) {
+    logger(`${signal} received. Exiting.`);
+    server.close();
+}
 
 module.exports = app;
