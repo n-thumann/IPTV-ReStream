@@ -23,6 +23,7 @@ Or with Docker (Linux only):
 1. [Install](https://docs.docker.com/v17.12/install/) Docker
 2. run `docker run -d --network host --restart always --name IPTV-ReStream [-e HOST="127.0.0.1" | -e PORT=3000 | -e MCAST_IF="0.0.0.0" | -e XSPF_PROTOCOL="https" | -e XSPF_HOST="my.server.com:8080" | -e XSPF_PATH_PREFIX="/iptv" | -e ALLOW_UNKNOWN="false" | -e DEBUG="iptv-restream:*"] nthumann/iptv-restream:latest` (parameters in brackets are optional)
 
+The image is also available on GitHub Container Registry (use `ghcr.io/n-thumann/iptv-restream:latest`).
 ### Configuration ###
 It's highly recommended running this application behind a Reverse Proxy ([nginx](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/) or [Apache httpd](https://httpd.apache.org/docs/2.4/howto/reverse_proxy.html)) that enforces authentication (and encryption). When using a reverse proxy it's probably mandatory to adjust environment variables `XSPF_PROTOCOL`, `XSPF_HOST` and `XSPF_PATH_PREFIX`, otherwise the application may generate an invalid VLC XSPF-Playlist. For example, if the application is reachable over a Reverse Proxy via https://my.server.com:8080/iptv, then run `export XSPF_PROTOCOL=https XSPF_HOST=my.server.com:8080 XSPF_PATH_PREFIX=/iptv`. Also, if the clients real IP and Port should be visible on the Dashboard, make sure to pass HTTP Headers `X-Real-IP` and `X-Real-Port` from the Reverse Proxy to the Application.
 
