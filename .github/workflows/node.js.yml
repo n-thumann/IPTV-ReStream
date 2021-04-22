@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [13.x, 14.x]
+        node-version: [14.x, 16.x]
     name: Build & Lint
     steps:
     - name: Checkout Code
