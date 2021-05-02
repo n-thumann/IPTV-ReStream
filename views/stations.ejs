@@ -18,7 +18,8 @@
                         <th scope="col"></th>
                         <th scope="col">Station</th>
                         <th scope="col">RTP URL</th>
-                        <th scope="col">View Now (open URL in VLC)</th>
+                        <th scope="col">Open stream in VLC</th>
+                        <th scope="col">Open raw stream</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,7 +36,14 @@
                                     <td><%= station.title %></td>
                                     <td><%= `rtp://${station.mcast_source}@${station.mcast_group}:${station.mcast_port}` %></td>
                                     <td>
-                                        <a href="<%= `${protocol}://${host}${pathPrefix}/live/${station.mcast_source}@${station.mcast_group}:${station.mcast_port}` %>"><i class="playButton" data-feather="play"></i></a>
+                                        <a href="<%= `vlc://${protocol}://${host}${pathPrefix}/live/${station.mcast_source}@${station.mcast_group}:${station.mcast_port}` %>">
+                                            <i class="playButton" data-feather="play"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="<%= `${protocol}://${host}${pathPrefix}/live/${station.mcast_source}@${station.mcast_group}:${station.mcast_port}` %>">
+                                            <i class="playButton" data-feather="tv"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             <% }); %>
