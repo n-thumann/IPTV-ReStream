@@ -9,6 +9,7 @@ This app allows remotely viewing source-specific multicast RTP streams (e.g. Deu
 * simple Dashboard with Statistics
 * Station List with Images
 * VLC-ready playlist included
+* Open stream directly in VLC (iOS & Android only)
 * automatic running program detection (from MPEG-TS stream)
 
 ## Installation
@@ -41,6 +42,7 @@ It's highly recommended running this application behind a Reverse Proxy ([nginx]
 
 ### Usage
 Open the webinterface and navigate to `Stations`, then download the XSPF Playlist for VLC and open it. Done!
+If you're running iOS or Android, you can also simply hit the play button in the webinterface to open up VLC automatically.
 
 It is also possible to access the source-specific multicast streams directly by opening `/live/mcast_source@mcast_group:mcast_port` (e.g. `/live/87.141.215.251@232.0.20.35:10000` for Das Erste HD) or by using the shortcut at `/live/station/station_title` (e.g. `/live/station/ZDFSD` for ZDF SD).
 Please note that running on Windows only supports streaming one program. For streaming multiple programs concurrently use Linux.
