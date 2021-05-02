@@ -31,8 +31,8 @@ It's highly recommended running this application behind a Reverse Proxy ([nginx]
 ### Environment Variables
 | Variable | Description |
 | -------- | ----------- |
-| HOST | Webinterface Listen Host (default `127.0.0.1`) |
-| PORT | Webinterface Listen Port (default `3000`) |
+| HOST | Web interface Listen Host (default `127.0.0.1`) |
+| PORT | Web interface Listen Port (default `3000`) |
 | MCAST_IF | joins the multicast group using this interface (default `0.0.0.0`, lets OS choose automatically) |
 | XSPF_PROTOCOL | Protocol (`http`/`https`) for generating XSPF |
 | XSPF_HOST | Host and Port for generating XSPF |
@@ -41,8 +41,8 @@ It's highly recommended running this application behind a Reverse Proxy ([nginx]
 | DEBUG | Enable Debug Logging (`iptv-restream:*`) |
 
 ### Usage
-Open the webinterface and navigate to `Stations`, then download the XSPF Playlist for VLC and open it. Done!
-If you're running iOS or Android, you can also simply hit the play button in the webinterface to open up VLC automatically.
+Open the web interface and navigate to `Stations`, then download the XSPF Playlist for VLC and open it. Done!
+If you're running iOS or Android, you can also simply hit the play button in the web interface to open up VLC automatically.
 
 It is also possible to access the source-specific multicast streams directly by opening `/live/mcast_source@mcast_group:mcast_port` (e.g. `/live/87.141.215.251@232.0.20.35:10000` for Das Erste HD) or by using the shortcut at `/live/station/station_title` (e.g. `/live/station/ZDFSD` for ZDF SD).
 Please note that running on Windows only supports streaming one program. For streaming multiple programs concurrently use Linux.
