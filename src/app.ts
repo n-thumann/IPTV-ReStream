@@ -8,7 +8,7 @@ import statusRouter from './routes/status';
 import liveRouter from './routes/live';
 import stationRouter from './routes/station';
 import configProvider from './providers/config';
-import { SignalConstants } from 'node:os';
+import { SignalConstants } from 'os';
 
 const app = express();
 const logger = debug('iptv-restream:server');
