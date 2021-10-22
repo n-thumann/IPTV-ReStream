@@ -33,7 +33,7 @@ router.get('/:mcast_source@:mcast_group::mcast_port', async (req: Request, res: 
 	try {
 		await streamer.stream(mcast_source, mcast_group, mcast_port, mcast_if, req.socket, res);
 	} catch (err) {
-		res.status(500).send(`receiver: ${escape(err)}`);
+		res.status(500).send(`receiver: ${escape(err as string)}`);
 	}
 	connectionProvider.removeConnection(req.socket);
 });

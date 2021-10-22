@@ -27,8 +27,8 @@ class ConnectionProvider {
             this.connections.forEach((connection) => {
                 const currentSocket = connection.socket;
                 connections.push({
-                    'localAddress': currentSocket.localAddress,
-                    'localPort': currentSocket.localPort,
+                    'localAddress': currentSocket.localAddress || '',
+                    'localPort': currentSocket.localPort || 0,
                     'remoteAddress': currentSocket.remoteAddress || '',
                     'remotePort': currentSocket.remotePort || 0,
                     'realIP': connection.realIP,
