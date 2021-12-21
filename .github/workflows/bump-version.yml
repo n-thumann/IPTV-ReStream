@@ -23,17 +23,17 @@ jobs:
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git checkout -b bump_version
 
     - name: Bump version
       run: >
         echo "BUMPED_VERSION=$(
-        npm version --commit-hooks false --git-tag-version false patch
+        npm version --git-tag-version false patch
         )" | tee -a $GITHUB_ENV
 
-    - name: Checkout and push branch
+    - name: Git push branch
       run: |
-        git checkout -b bump_version_${{ env.BUMPED_VERSION }}
-        git push origin bump_version_${{ env.BUMPED_VERSION }}
+        git push origin bump_version
 
     - name: Create PR
       uses: actions/github-script@v5
@@ -44,7 +44,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               title: "Bump version to ${{ env.BUMPED_VERSION }}"
-              head: bump_version_${{ env.BUMPED_VERSION }},
+              head: bump_version
               base: "main",
-              body: "This PR bumps the version to ${{ env.bumped_tag }}, as requested by @${{ github.actor }} in https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}."
+              body: "This PR bumps the version to ${{ env.BUMPED_VERSION }}, as requested by @${{ github.actor }} in https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}."
             })
