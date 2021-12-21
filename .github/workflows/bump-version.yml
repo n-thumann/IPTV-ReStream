@@ -1,0 +1,31 @@
+name: Bump Version
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "The SemVer type of the release (major / minor / patch)"
+        required: true
+        type: choice
+        options: 
+        - major
+        - minor
+        - patch
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Git
+      run: |
+        git config user.name "Nicolas Thumann"
+        git config user.email "me@n-thumann.de"
+
+    - name: Bump version
+      run: npm bump ${{ github.event.inputs.version }}
+
+    - name: Push latest version
+      run: git push origin main --follow-tags
