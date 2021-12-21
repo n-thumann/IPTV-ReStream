@@ -25,7 +25,7 @@ jobs:
         git config user.email "me@n-thumann.de"
 
     - name: Bump version
-      run: npm bump ${{ github.event.inputs.version }}
+      run: npm version ${{ github.event.inputs.version }}
 
     - name: Push latest version
       run: git push origin main --follow-tags
