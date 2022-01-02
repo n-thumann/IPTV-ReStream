@@ -11,7 +11,7 @@ jobs:
 
       - name: Get tag
         run: |
-          echo TAG=$(git log --format=%B -n 1 --no-merges ${{ github.ref }}) | tee -a $GITHUB_ENV
+          echo TAG=$(git log -1 --format='%B' --no-merges) | tee -a $GITHUB_ENV
 
       - name: Create release
         uses: actions/github-script@v5
