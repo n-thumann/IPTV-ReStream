@@ -16,7 +16,7 @@ jobs:
           echo TAG=$(git log -1 --format='%B' --no-merges) | tee -a $GITHUB_ENV
 
       - name: Create release
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         with:
           script: |
             github.rest.repos.createRelease({
