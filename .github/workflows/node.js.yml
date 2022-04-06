@@ -15,7 +15,7 @@ jobs:
     name: Build & Lint
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Using Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
