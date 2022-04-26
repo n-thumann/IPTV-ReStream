@@ -1,6 +1,5 @@
 import { Station } from '../models/station';
 import { readFile } from 'fs';
-import util from 'util';
 import debug from 'debug';
 
 interface jsonFormat {
@@ -22,14 +21,13 @@ class StationProvider {
                 return;
             }
             const json = JSON.parse(data.toString());
-            const imageProxyFormat = json['imagescalingurl'];
             json['channellist'].forEach((channel: jsonFormat) => {
                 this.stations.push(new Station(
                     `${channel.channel_name} ${channel.media_definition}`,
                     channel.media_multicast_sourceip,
                     channel.media_multicast_ip,
                     channel.media_multicast_port,
-                    util.format(imageProxyFormat, 30, channel.channel_logo))
+                    channel.channel_logo)
                 );
             });
             this.logger('Stations loaded');
