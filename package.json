@@ -7,7 +7,7 @@
     "build": "tsc",
     "build:watch": "tsc --watch",
     "clean": "rm -rf dist/* && rm -rf node_modules",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts --max-warnings 0"
   },
   "dependencies": {
     "debug": "^4.3.4",
