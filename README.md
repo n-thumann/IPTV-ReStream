@@ -22,7 +22,7 @@ This app allows remotely viewing source-specific multicast RTP streams (e.g. Deu
 
 Or with Docker (Linux only):
 1. [Install](https://docs.docker.com/v17.12/install/) Docker
-2. run `docker run -d --network host --restart always --name IPTV-ReStream [-e HOST="127.0.0.1" | -e PORT=3000 | -e MCAST_IF="0.0.0.0" | -e XSPF_PROTOCOL="https" | -e XSPF_HOST="my.server.com:8080" | -e XSPF_PATH_PREFIX="/iptv" | -e ALLOW_UNKNOWN="false" | -e DEBUG="iptv-restream:*"] nthumann/iptv-restream:latest` (parameters in brackets are optional)
+2. run `docker run -d --network host --restart always --name IPTV-ReStream [-e HOST="127.0.0.1" | -e PORT=3000 | -e MCAST_IF="0.0.0.0" | -e XSPF_PROTOCOL="https" | -e XSPF_HOST="my.server.com:8080" | -e XSPF_PATH_PREFIX="/iptv" | -e ALLOW_UNKNOWN="false" | -e RECEIVER_TIMEOUT=30 | -e DEBUG="iptv-restream:*"] nthumann/iptv-restream:latest` (parameters in brackets are optional)
 
 The image is also available on GitHub Container Registry (use `ghcr.io/n-thumann/iptv-restream:latest`).
 ### Configuration ###
@@ -38,6 +38,7 @@ It's highly recommended running this application behind a Reverse Proxy ([nginx]
 | XSPF_HOST | Host and Port for generating XSPF |
 | XSPF_PATH_PREFIX | Path Prefix for generating XSPF |
 | ALLOW_UNKNOWN | Allow forwarding streams that are not in the station list (default `0`/`false`) |
+| RECEIVER_TIMEOUT | Seconds with not data received after which the connection is closed (default `30`) |
 | DEBUG | Enable Debug Logging (`iptv-restream:*`) |
 
 ### Usage
