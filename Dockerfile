@@ -1,4 +1,4 @@
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 COPY src ./src/
@@ -7,7 +7,7 @@ COPY tsconfig.json ./
 RUN npm install --only=dev
 RUN npx tsc
 
-FROM node:18-alpine
+FROM node:20-alpine
 WORKDIR /app
 COPY --from=builder /app/dist/ ./dist
 RUN mkdir ./data && wget -P ./data https://db.iptv.blog/multicastadressliste.json
