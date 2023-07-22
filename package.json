@@ -1,6 +1,6 @@
 {
   "name": "iptv-restream",
-  "version": "1.4.10",
+  "version": "1.4.11",
   "private": true,
   "scripts": {
     "start": "node dist/app.js",
