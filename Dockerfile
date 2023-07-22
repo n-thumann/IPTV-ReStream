@@ -4,7 +4,7 @@ WORKDIR /app
 COPY src ./src/
 COPY package*.json ./
 COPY tsconfig.json ./
-RUN npm install --only=dev
+RUN npm install
 RUN npx tsc
 
 FROM node:18-alpine
@@ -14,7 +14,7 @@ RUN mkdir ./data && wget -P ./data https://db.iptv.blog/multicastadressliste.jso
 COPY package*.json ./
 COPY views/ ./views/
 COPY public/ ./public/
-RUN npm install --only=production
+RUN npm install --omit=dev
 USER node
 
 ENTRYPOINT [ "node", "dist/app.js" ]
