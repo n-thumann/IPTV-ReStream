@@ -1,0 +1,19 @@
+name: "Build IPTV-ReStream"
+description: "Install dependencies and build it"
+inputs:
+  node-version:
+    description: "Node.js version to use"
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node.js ${{ inputs.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-version }}
+    - name: Install dependencies
+      shell: bash
+      run: npm ci
+    - name: Build
+      shell: bash
+      run: npm run build
