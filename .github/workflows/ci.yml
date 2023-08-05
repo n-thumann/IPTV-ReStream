@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x, 18.x, 19.x]
+        node-version: [18.x, 20.x]
     name: Build & Lint
     steps:
       - name: Checkout Code
@@ -32,7 +32,7 @@ jobs:
     name: Test
     strategy:
       matrix:
-        node-version: [16.x, 18.x, 19.x]
+        node-version: [18.x, 20.x]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -42,6 +42,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
         run: |
+          sudo apt update
           sudo apt install -y ffmpeg
       - name: Prepare test environment
         run: |
