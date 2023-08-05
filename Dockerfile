@@ -1,21 +1,21 @@
-FROM node:18-alpine AS builder
+FROM node:20-bullseye-slim AS builder
 
 WORKDIR /app
 COPY src ./src/
 COPY package*.json ./
 COPY tsconfig.json ./
-RUN npm install
-RUN npx tsc
+RUN npm ci
+RUN npm run build
 
-FROM node:18-alpine
-WORKDIR /app
-COPY --from=builder /app/dist/ ./dist
-RUN mkdir ./data && wget -P ./data https://db.iptv.blog/multicastadressliste.json
-COPY package*.json ./
-COPY views/ ./views/
-COPY public/ ./public/
-RUN npm install --omit=dev
+FROM node:20-bullseye-slim
 USER node
+WORKDIR /app
 
-ENTRYPOINT [ "node", "dist/app.js" ]
+COPY --chown=node:node --from=builder /app/dist/ /app/
+ADD --chown=node:node https://db.iptv.blog/multicastadressliste.json ./data/
+COPY --chown=node:node package*.json ./
+COPY --chown=node:node views/ ./views/
+COPY --chown=node:node public/ ./public/
+RUN npm ci --omit=dev && npm cache clean --force
 
+CMD [ "node", "app.js" ]
