@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  iptv-restream:
+    image: nthumann/iptv-restream:latest
+    build:
+      context: .
+    network_mode: host
+    restart: always
+    container_name: IPTV-ReStream
+    environment:
+      HOST: "127.0.0.1"
+      PORT: 3000
+      MCAST_IF: "0.0.0.0"
+      XSPF_PROTOCOL: "https"
+      XSPF_HOST: "my.server.com:8080"
+      XSPF_PATH_PREFIX: "/iptv"
+      ALLOW_UNKNOWN: "false"
+      DEBUG: "iptv-restream:*"
