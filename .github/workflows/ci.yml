@@ -15,7 +15,7 @@ jobs:
     name: Build & Lint
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Build
         uses: ./.github/actions/build
         with:
@@ -35,7 +35,7 @@ jobs:
         node-version: [18.x, 20.x]
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Build
         uses: ./.github/actions/build
         with:
