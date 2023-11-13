@@ -1,4 +1,4 @@
-FROM node:20-bullseye-slim AS builder
+FROM node:21-bullseye-slim AS builder
 
 WORKDIR /app
 COPY src ./src/
@@ -7,7 +7,7 @@ COPY tsconfig.json ./
 RUN npm ci
 RUN npm run build
 
-FROM node:20-bullseye-slim
+FROM node:21-bullseye-slim
 USER node
 WORKDIR /app
 
