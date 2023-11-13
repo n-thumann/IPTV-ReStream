@@ -31,7 +31,7 @@ It's highly recommended running this application behind a Reverse Proxy ([nginx]
 ### Environment Variables
 | Variable | Description |
 | -------- | ----------- |
-| HOST | Web interface Listen Host (default `127.0.0.1`) |
+| HOST | Web interface Listen Host (default: empty to listen on all interfaces) |
 | PORT | Web interface Listen Port (default `3000`) |
 | MCAST_IF | joins the multicast group using this interface (default `0.0.0.0`, lets OS choose automatically) |
 | XSPF_PROTOCOL | Protocol (`http`/`https`) for generating XSPF |
