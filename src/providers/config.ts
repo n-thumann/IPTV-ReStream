@@ -7,6 +7,7 @@ class ConfigProvider {
     readonly xspf_host: string = '';
     readonly xspf_pathPrefix: string =  '';
     readonly allow_unknown: boolean;
+    readonly receiver_timeout: number;
 
     constructor() {
         this.host = process.env.HOST;
@@ -16,8 +17,9 @@ class ConfigProvider {
         this.xspf_host = process.env.XSPF_HOST || '';
         this.xspf_pathPrefix = process.env.XSPF_PATH_PREFIX || '';
         this.allow_unknown = (process.env.ALLOW_UNKNOWN === 'true' || process.env.ALLOW_UNKNOWN === '1') ? true : false;
+        this.receiver_timeout = parseInt(process.env.RECEIVER_TIMEOUT || '30');
         const logger = debug('iptv-restream:config');
-        logger(`Config loaded: HOST=${this.host}, PORT=${this.port}, MCAST_IF=${this.mcast_if}, XSPF_PROTOCOL=${this.xspf_protocol}, XSPF_HOST=${this.xspf_host}, XSPF_PATH_PREFIX=${this.xspf_pathPrefix}, ALLOW_UNKNOWN=${this.allow_unknown}`);
+        logger(`Config loaded: HOST=${this.host}, PORT=${this.port}, MCAST_IF=${this.mcast_if}, XSPF_PROTOCOL=${this.xspf_protocol}, XSPF_HOST=${this.xspf_host}, XSPF_PATH_PREFIX=${this.xspf_pathPrefix}, ALLOW_UNKNOWN=${this.allow_unknown}, RECEIVER_TIMEOUT=${this.receiver_timeout}`);
     }
 }
 export default new ConfigProvider();

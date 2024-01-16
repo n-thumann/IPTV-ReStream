@@ -1,6 +1,7 @@
 import { Socket } from 'net';
 import { Response } from 'express';
 import connectionProvider from './connection';
+import configProvider from '../providers/config';
 import dgram from 'dgram';
 import debug from 'debug';
 
@@ -11,6 +12,11 @@ class StreamProvider {
         return new Promise((resolve, reject) => {
             this.logger(`Client requested ${mcast_source}@${mcast_group}:${mcast_port}.`);
             const receiver = dgram.createSocket({ type: 'udp4', reuseAddr: true });
+
+            const timeout = setTimeout(() => {
+                this.logger('data reception timed out')
+                reject('data reception timed out')
+            }, configProvider.receiver_timeout * 1_000);
 
             receiver.on('error', (err: Error) => {
                 this.logger(`Error (receiver): ${err}`);
@@ -34,6 +40,7 @@ class StreamProvider {
 
                 const mpegtsPacket = Buffer.from(message).slice(12);
                 res.write(mpegtsPacket);
+                timeout.refresh();
 
                 const packetCount = mpegtsPacket.length / 188;
                 for (let packetNumber = 0; packetNumber < packetCount; packetNumber++) {
@@ -72,6 +79,7 @@ class StreamProvider {
 
             socket.on('close', () => {
                 receiver.close();
+                clearTimeout(timeout);
                 this.logger(`Client ${socket.remoteAddress}:${socket.remotePort} disconnected. Closing receiver.`);
                 resolve();
             });
